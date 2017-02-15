@@ -1,0 +1,27 @@
+#practica 2 
+
+#Directorio de trabajo
+getwd()
+setwd ("D://clases//time-series")
+setwd ("clases//time-series")
+
+#Importar datos con otro formato
+install.packages("foreign")
+library(foreign)
+datastata <- read.dta("D://clases//time-series//clases//clase4//clase1.dta")
+
+#Guardar datos con formato en R
+save(datastata, file= "D://clases//time-series//clases//clase4//data.RData")
+load("D://clases//time-series//clases//clase4//data.RData")
+
+#Archivo CSV
+library(readr)
+dataset <- read_csv(NULL)
+
+#Archivo excel
+install.packages("readxl")
+dataset <- read_excel(NULL)
+
+#Archivo dta 
+library(haven)
+dataset <- read_stata(NULL)
