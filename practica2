@@ -1,18 +1,100 @@
-#practica 2 
+# Universidad Autónoma del Estado de México
+# Clases de Series de Tiempo
+# Práctica 2
+# 9 de febrero de 2017
+
+# Matrices
+matriz<-matrix(15:30,4,4) 
+# matrix(valores, fila , columna )
+matriz
+
+matriz[4,1] 
+#Muetra el valor guardado en la fila 4, columna 1.
+
+matriz[2,2]
+#Muetra el valor guardado en la fila 2, columna 2.
+
+matriz[,c(2,3)]
+# Muestra todos los valores que están en todas las filas de las columnas 2 y 3
+
+# Operaciones con matrices
+matriz %*% matriz
+# %*% Es un producto de matrices.
+matriz * matriz
+# “*” Implica la multiplicación factor a factor
+
+?cbind
+# Combina matrices a través de las columnas
+
+?rbind
+# Combinar matrices a través de las filas
+
+matriz2<-matrix(17:24,2,4) 
+# Dos filas y cuatro columnas
+matriz2
+
+matriz3<-cbind(99:102,matriz2[,4])
+# La matriz3 es una combinación de las columnas de los números que van de 99 a 102 con la columna 4 de la matriz 2.
+matriz3
+
+matriz4<-matrix(2000:2007,4,2)
+matriz4
+matriz5<-rbind(matriz[2,], matriz4[2,])
+# Combinación por filas de los valores que están en las segundas filas de “matriz” y “matriz4”
+matriz5
 
 #Directorio de trabajo
 getwd()
+# “getwd()” devuelve una ruta de archivo absoluto que representa el directorio de trabajo actual del proceso de R.
+
 setwd ("D://clases//time-series")
+# “setwd ()” se utiliza para establecer el directorio de trabajo, en el paréntesis va la dirección de la carpeta donde está/án los archivos que vas a ocupar.
+
 setwd ("clases//time-series")
 
-#Importar datos con otro formato
-install.packages("foreign")
-library(foreign)
-datastata <- read.dta("D://clases//time-series//clases//clase4//clase1.dta")
+# Para importar datos con otro formato
 
-#Guardar datos con formato en R
+# Se instala la paquetería 
+install.packages("foreign")
+
+# Se instala la librería
+library(foreign)
+
+datastata <- read.dta("D://clases//time-series//clases//clase4//clase1.dta")
+# “datastata” es el nombre de la base de datos que se acaba de descargar.
+
+head(datastata) 
+# Muestra el encabezado
+
+colnames(datastata) 
+# Muestra los nombres de las columnas
+
+datastata[3,5] 
+# De esta manera, base que bajamos queda guardada como una matriz.
+
+datastata[1:20,"edad"] 
+# Imprime los primeros 20 valores de la variable edad
+
+datastata[c(1,5,7),2] 
+# Da los renglones 1, 5 y 7 de la columna dos 
+
+colnames(datastata)[2]<-"ingreso"
+# Reemplaza el nombre de la posición dos por “ingreso”
+
+colnames(datastata)
+
+summary(datastata)
+# “summary” es una función genérica utilizada para producir resúmenes de los resultados de varias funciones de ajuste del modelo. La función invoca métodos particulares que dependen de la clase del primer argumento.
+
+
+
+# Guardar datos con formato en R
 save(datastata, file= "D://clases//time-series//clases//clase4//data.RData")
+
+
+
 load("D://clases//time-series//clases//clase4//data.RData")
+#   Load puede cargar objetos R guardados en el formato actual o cualquier otro. Puede leer un archivo comprimido directamente desde un archivo o desde una conexión adecuada (incluyendo una llamada a url).
 
 #Archivo CSV
 library(readr)
@@ -25,3 +107,14 @@ dataset <- read_excel(NULL)
 #Archivo dta 
 library(haven)
 dataset <- read_stata(NULL)
+
+install.packages("readxl") 
+library(readxl)
+
+petroleo<-read_excel("C:/Users/Microsoft Windows 10/Documents/ petroleo.xlsx")
+
+# Declaramos como serie de tiempo
+petroleo.ts<-ts(petroleo, frequency = 1,start=(1)) 
+# time series, frecuencia: intervalo ->en este caso es diario
+
+plot(rates.ts,ylab="Rates",xlab="Periodo", main="Paridad peso/dolar", cor=2)
