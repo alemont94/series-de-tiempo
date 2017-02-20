@@ -1,0 +1,114 @@
+# Universidad Autónoma del Estado de México
+# Clases de Series de Tiempo
+# Práctica 3
+# 15 de febrero de 2017
+
+getwd()
+
+# MANDAR LLAMAR LIBRERÍAS
+install.packages("foreign")
+library(foreign)
+install.packages("readxl") 
+library(readxl)
+setwd("C:/Users/Microsoft Windows 10/Documents ")
+
+# JALAR BASES DE DATOS
+
+# Petróleo
+petroleo<-read_excel("C:/Users/Microsoft Windows 10/Documents/petroleo.xlsx")
+
+#PIB
+PIB<-read_excel("C:/Users/Microsoft Windows 10/Documents/gdpmexico.xlsx")
+
+# Tasa de Mortalidad
+mortalidad<-read_excel("C:/Users/Microsoft Windows 10/Documents/Facultad/8VO/Series de tiempo/prácticas/mort_rate.xlsx")
+
+# Importaciones
+importaciones<-read_excel("C:/Users/Microsoft Windows 10/Documents/importa.xlsx")
+
+# DECLARANDO COMO SERIES DE TIEMPO
+
+petroleo.ts=ts(petroleo,frequency=5)
+plot(petróleo.ts, xlab="Periodo", ylab="Cotización", main= "Precio de petróleo", col="red")
+
+PIB.ts=ts(PIB,frequency=5)
+plot(PIB.ts, xlab="X", ylab="Y", main= "PIB", col="red")
+
+mortalidad.ts=ts(mortalidad,frequency=5)
+plot(mortalidad.ts, xlab="X", ylab="Y", main= "Mortalidad Infantil", col="red")
+
+importaciones.ts=ts(importaciones,frequency=5)
+plot(importaciones.ts, xlab="X", ylab="Y", main= "Importaciones", col="red")
+
+# DESCOMPONIENDO LAS VARIABLES
+?decompose
+# La función “descompose” descompone una serie de tiempo en componentes estacionales, de tendencia e irregulares utilizando promedios móviles. Trata con el componente estacional aditivo o multiplicativo.
+
+petroleo.descom<-decompose(petroleo.ts,"additive")
+petroleo.descom
+
+PIB.descom<-decompose(PIB.ts,"additive")
+PIB.descom
+
+mortalidad.descom<-decompose(mortalidad.ts,"additive")
+mortalidad.descom
+
+importaciones.descom<-decompose(importaciones.ts,"additive")
+importaciones.descom
+
+# GRAFICANDO
+
+# SEASONAL
+# seasonal: estacionalidad
+
+# Petróleo
+plot(as.ts(petroleo.descom$seasonal), xlab="Tiempo", ylab="Seasonal", main= "Precio de petróleo", col="purple") 
+
+# PIB
+plot(as.ts(PIB.descom$seasonal), xlab="Tiempo", ylab="Seasonal", main= "PIB", col="red") 
+
+# Tasa de Mortalidad
+plot(as.ts(mortalidad.descom$seasonal), xlab="Tiempo", ylab="Seasonal", main= "mortalidad", col="green") 
+
+# Importaciones
+plot(as.ts(importaciones.descom$seasonal), xlab="Tiempo", ylab="Seasonal", main= " importaciones ", col="blue") 
+
+# TREND
+# trend: tendencia
+
+#Petróleo
+plot(as.ts(petroleo.descom$trend), xlab="Tiempo", ylab="Trend", main= "Precio de petróleo", col="purple") 
+
+# PIB
+plot(as.ts(PIB.descom$trend), xlab="Tiempo", ylab="Trend", main= "PIB", col="red") 
+
+# Tasa de Mortalidad
+plot(as.ts(mortalidad.descom$trend), xlab="Tiempo", ylab="Trend", main= "mortalidad", col="green") 
+
+# Importaciones
+plot(as.ts(importaciones.descom$trend), xlab="Tiempo", ylab="Trend", main= " importaciones ", col="blue") 
+
+# RANDOM
+# random: aleatoriedad
+
+# Petróleo
+plot(as.ts(petroleo.descom$random), xlab="Tiempo", ylab="Random", main= "Precio de petróleo", col="purple") 
+
+# PIB
+plot(as.ts(PIB.descom$random), xlab="Tiempo", ylab="Random", main= "PIB", col="red") 
+
+# Tasas de Mortalidad
+plot(as.ts(mortalidad.descom$random), xlab="Tiempo", ylab="Random", main= "mortalidad", col="green") 
+
+# Importaciones
+plot(as.ts(importaciones.descom$random), xlab="Tiempo", ylab="Random", main= " importaciones ", col="blue") 
+
+# DESCOMPOSICIÓN
+
+plot(petroleo.descom,col="purple")
+
+plot(PIB.descom,col="red")
+
+plot(mortalidad.descom,col="green")
+
+plot(importaciones.descom,col="blue")
